@@ -9,3 +9,6 @@
 
 ## 과제 목표
 ![](img/project_goal.jpg)
+
+## 보조기기 개발 프로세스
+![](img/Research_process.jpg)
