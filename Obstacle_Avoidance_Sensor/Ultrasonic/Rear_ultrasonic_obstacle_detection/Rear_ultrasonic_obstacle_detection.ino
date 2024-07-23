@@ -16,18 +16,18 @@ void setup() {
   pinMode(echoPin, INPUT);   // Echo1 핀을 입력으로 설정
   pinMode(trigPin2, OUTPUT);  // Trigger2 핀을 출력으로 설정
   pinMode(echoPin2, INPUT);   // Echo2 핀을 입력으로 설정
-  pinMode(LED1, OUTPUT); 
+  pinMode(LED1, OUTPUT);
   pinMode(LED2, OUTPUT);
   pinMode(LED3, OUTPUT);
   pinMode(buzzer, OUTPUT);
 }
 
 void loop() {
-  long duration, distance;
   long duration1, distance1;
   long duration2, distance2;
-  
-  //1번센서 초음파 신호 보내기 (JSN_B02는 20us)
+  long distance;
+
+  // 1번 센서 초음파 신호 보내기 (JSN_B02는 20us)
   digitalWrite(trigPin, LOW);  
   delayMicroseconds(2); 
   digitalWrite(trigPin, HIGH); 
@@ -37,7 +37,7 @@ void loop() {
   // 1번 초음파 반사 시간 측정
   duration1 = pulseIn(echoPin, HIGH);
 
-  //2번센서 초음파 신호 보내기
+  // 2번 센서 초음파 신호 보내기
   digitalWrite(trigPin2, LOW);  
   delayMicroseconds(2); 
   digitalWrite(trigPin2, HIGH); 
@@ -50,29 +50,20 @@ void loop() {
   // 거리 계산 (cm 단위)
   distance1 = duration1 * 0.034 / 2;
   distance2 = duration2 * 0.034 / 2;
-  
-  // 두 센서간 거리 값중 가장 작은 값을 기준으로 장애물 위협을 판단
-  if(distance1 > distance2)
-  {
-    distance = distance2;
-  }
-  else
-  {
-    distance = distance1;
-  }
-  
+
+  // 두 센서 간 거리 값 중 가장 작은 값을 기준으로 장애물 위협을 판단
+  distance = min(distance1, distance2);
+
   // 거리 출력
   Serial.print("Distance: ");
-  //거리값이 400cm이상 2cm 이하일 때는 감지하지 않음
+  // 거리 값이 400cm 이상 2cm 이하일 때는 감지하지 않음
   if (distance >= 400 || distance <= 2) {
     Serial.println("Out of range");
-  } 
-  else {
-  
-    //센서의 최소탐지 거리 값이 20cm이기 때문에 25cm 이상일때 알고리즘이 동작
+  } else {
+    // 센서의 최소 탐지 거리 값이 20cm이기 때문에 25cm 이상일 때 알고리즘이 동작
     if (distance > 25) {
       unsigned long currentMillis = millis();
-      //탐지거리가 150cm 이상일 때는 buzzer off & LED off
+      // 탐지 거리가 150cm 이상일 때는 buzzer off & LED off
       if (distance > 150) {
         digitalWrite(LED1, LOW);
         digitalWrite(LED2, LOW);
@@ -80,7 +71,7 @@ void loop() {
         noTone(buzzer);
         buzzerInterval = 0;
       }
-      //탐지거리가 110cm 이상일 때는 buzzer on & LED 1개 on
+      // 탐지 거리가 110cm 이상일 때는 buzzer on & LED 1개 on
       else if (distance > 110) {
         digitalWrite(LED1, LOW);
         digitalWrite(LED2, LOW);
@@ -91,7 +82,7 @@ void loop() {
           buzzerInterval = 400;  // 400ms 간격으로 소리 발생
         }
       }
-      //탐지거리가 80cm 이상일 때는 buzzer on & LED 1개 on
+      // 탐지 거리가 80cm 이상일 때는 buzzer on & LED 1개 on
       else if (distance > 80) {
         digitalWrite(LED1, HIGH);
         digitalWrite(LED2, LOW);
@@ -102,7 +93,7 @@ void loop() {
           buzzerInterval = 300;  // 300ms 간격으로 소리 발생
         }
       }
-      //탐지거리가 50cm 이상일 때는 buzzer on & LED 2개 on
+      // 탐지 거리가 50cm 이상일 때는 buzzer on & LED 2개 on
       else if (distance > 50) {
         digitalWrite(LED1, HIGH);
         digitalWrite(LED2, HIGH);
@@ -113,7 +104,7 @@ void loop() {
           buzzerInterval = 100;  // 100ms 간격으로 소리 발생
         }
       }
-      //탐지거리가 50cm 이하일 때는 buzzer on & LED 3개 on
+      // 탐지 거리가 50cm 이하일 때는 buzzer on & LED 3개 on
       else {
         digitalWrite(LED1, HIGH);
         digitalWrite(LED2, HIGH);
@@ -124,18 +115,17 @@ void loop() {
           buzzerInterval = 10;  // 10ms 간격으로 소리 발생
         }
       }
-      //각각의 센서 값을 출력
-      Serial.print("distance=");
+      // 각각의 센서 값을 출력
+      Serial.print("distance1=");
       Serial.print(distance1);
-      Serial.print("cm         ");
-      Serial.print("distance2=");
+      Serial.print("cm, distance2=");
       Serial.print(distance2);
       Serial.println("cm");
-    }
-    else {
+    } else {
       Serial.println("Below the lower limit");
     }
   }
 
   delay(80);
 }
+
