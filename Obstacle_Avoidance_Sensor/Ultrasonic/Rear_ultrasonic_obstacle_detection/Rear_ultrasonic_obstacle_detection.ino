@@ -62,7 +62,7 @@ void loop() {
   }
   
   // 거리 출력
-  Serial.print("Distance: ");0
+  Serial.print("Distance: ");
   //거리값이 400cm이상 2cm 이하일 때는 감지하지 않음
   if (distance >= 400 || distance <= 2) {
     Serial.println("Out of range");
