@@ -1,9 +1,8 @@
 import serial
 import time
 import cv2
-import numpy as np
 
-cap = cv2.VideoCapture(0) 
+cap = cv2.VideoCapture(0)
 
 # 원의 위치와 반지름 설정
 circles = [
@@ -23,34 +22,44 @@ py_serial = serial.Serial(
 time.sleep(2)  # 직렬 통신 초기화를 위한 대기 시간
 
 try:
-    distance = "데이터 없음"  # 초기값 설정
+    #distance = "데이터 없음"  # 초기값 설정
 
     while True:
         success, img = cap.read()
         if not success:
-            print("웹캠을 읽을 수 없습니다. cv2.VideoCapture(1)로 변경해보세요.")
+            print("웹캠을 읽을 수 없습니다.")
             break
         
         # 직렬 포트에서 거리 데이터 읽기
         if py_serial.in_waiting > 0:
             distance = py_serial.readline().decode('utf-8').strip()
-            try:
-                distance = float(distance)
-            except ValueError:
-                distance = None
-        
+            distance = int(float(distance))
+  
+        cv2.putText(img, str(distance), (300,450), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,0,255), 1)
         print(distance)    
         
-        if distance is not None and distance <= 140:
-            for i, circle in enumerate(circles):                  
-                if distance >= (i * 30) + 50:
-                    cv2.circle(img, circle["center"], circle["radius"], (0, 0, 255), 2)  # 원 채우기
+        if distance is not None:
+            fill_count = 0
+    
+            if distance < 50:
+                fill_count = 4  # 50 미만일 때 4개 원 채우기
+            elif distance < 75:
+                fill_count = 3  # 75 미만일 때 3개 원 채우기
+            elif distance < 90:
+                fill_count = 2  # 90 미만일 때 2개 원 채우기
+            elif distance < 120:
+                fill_count = 1  # 120 미만일 때 1개 원 채우기
+
+            for i, circle in enumerate(circles):
+                if i < fill_count:
+                    cv2.circle(img, circle["center"], circle["radius"], (0, 0, 255), -1)  # 원 채우기
                 else:
-                    cv2.circle(img, circle["center"], circle["radius"], (0, 0, 255), -1)  # 원 테두리만 그리기
+                    cv2.circle(img, circle["center"], circle["radius"], (0, 0, 255), 2)  # 원 테두리만 그리기
             
-        #webcam 거꾸로 설치시 사용, 아니면 주석 처리 :        
-        img = cv2.flip(img, 0)
+        #webcam 거꾸로 설치시 아니면 주석 처리 :        
+        #img = cv2.flip(img, 0)
         
+        img = cv2.resize(img, (1200, 760))
         cv2.imshow("webcam", img)     
         if cv2.waitKey(1) == ord('q'):
             break 
