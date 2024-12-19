@@ -1,0 +1,7 @@
+ultralytics #AI Based 사용안할 시 주석처리
+opencv-python
+numpy
+pyserial
+math
+time
+logging
