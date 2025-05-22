@@ -83,6 +83,7 @@ def send_dfplayer_command(cmd, param1, param2):
     uart.write(packet)
 
 # Main loop: wait for button presses and handle actions
+time.sleep_ms(3000)
 while True:
     # Enter low-power mode until an interrupt occurs (button press wakes the MCU)
     if not playing:
