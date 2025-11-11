@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "47487595245",
+    "project_id": "pushalret",
+    "storage_bucket": "pushalret.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47487595245:android:b64d2ef016f686fa0652e4",
+        "android_client_info": {
+          "package_name": "com.example.interfaceui"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKNuwdO5mqKfsu_JBGCEBcvUO4ERk7te4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
