@@ -1,0 +1,43 @@
+{
+  "shz/sensor": {
+    "sensor_id": "shz_sensor_pico",
+    "expected_event": "shz_detected",
+    "handler": "handle_shz",
+    "participates_in_alltrue": true
+  },
+
+  "mq7/sensor": {
+    "sensor_id": "mq7_sensor_pico",
+    "expected_event": "mq7_detected",
+    "handler": "handle_mq7",
+    "participates_in_alltrue": true
+  },
+
+  "gas/sensor": {
+    "sensor_id": "gas_sensor_pico",
+    "expected_event": "gas_detected",
+    "handler": "handle_gas",
+    "participates_in_alltrue": true
+  },
+
+  "AI_fire_alert": {
+    "sensor_id": "AI_D_fire",
+    "expected_event": "fire_detected",
+    "handler": "handle_fire",
+    "participates_in_alltrue": true
+  },
+
+  "water_level/sensor": {
+    "sensor_id": "water_level_1",
+    "expected_event": "water_detected",
+    "handler": "handle_water_level",
+    "participates_in_alltrue": false
+  },
+
+  "doorbell/sensor": {
+    "sensor_id": "doorbell_1",
+    "expected_event": "button_pressed",
+    "handler": "handle_doorbell",
+    "participates_in_alltrue": false
+  }
+}
