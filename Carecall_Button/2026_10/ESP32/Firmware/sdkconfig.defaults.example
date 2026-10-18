@@ -1,0 +1,45 @@
+# CareCall public configuration example
+# Baseline: ESP-IDF v5.4.1 / ESP32-C3 Super Mini / 4 MB flash
+#
+# For a fresh local project:
+# 1. Copy this file to sdkconfig.defaults.
+# 2. Set device-specific values and passwords locally before building.
+# 3. Never upload local passwords, sdkconfig, or firmware binaries.
+#
+# Empty MQTT/AP passwords below are intentional.
+# This template cannot operate the device until they are configured.
+
+# Target and flash
+CONFIG_IDF_TARGET="esp32c3"
+CONFIG_ESPTOOLPY_FLASHMODE_DIO=y
+CONFIG_ESPTOOLPY_FLASHFREQ_80M=y
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+
+# Project partition table
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions_carecall_wifi.csv"
+CONFIG_PARTITION_TABLE_OFFSET=0x8000
+
+# LED
+CONFIG_CARECALL_LED_GPIO=2
+CONFIG_CARECALL_LED_BRIGHTNESS=16
+
+# Example device identity: configure separately for each device
+CONFIG_CARECALL_DEVICE_ID="button01"
+CONFIG_CARECALL_MQTT_USERNAME="button01"
+CONFIG_CARECALL_MQTT_CLIENT_ID="carecall-button01"
+
+# MQTT broker: hostname without .local
+CONFIG_CARECALL_MQTT_BROKER_MDNS_HOST="carecall-mqtt-server"
+CONFIG_CARECALL_MQTT_BROKER_PORT=1883
+
+# Required locally: must match the device account on the MQTT broker
+CONFIG_CARECALL_MQTT_PASSWORD=""
+
+# Required locally: 16-63 ASCII letters or digits
+CONFIG_CARECALL_SETUP_AP_PASSWORD=""
+
+# Optional Wi-Fi fallback credentials
+# Leave empty when provisioning Wi-Fi through the setup portal.
+CONFIG_CARECALL_WIFI_SSID=""
+CONFIG_CARECALL_WIFI_PASSWORD=""
