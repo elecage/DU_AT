@@ -1,0 +1,21 @@
+[Unit]
+Description=CareCall Wi-Fi setup router
+BindsTo=carecall-wifi-manager.service
+After=carecall-wifi-manager.service systemd-networkd.service
+ConditionPathExists=/etc/carecall-wifi-manager/owner
+Conflicts=netplan-wpa-wlan0.service carecall-wifi-manager-hostapd.service
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/sbin/wpa_supplicant -Dnl80211 -iwlan0 -c/run/carecall-wifi-manager/private/candidate.conf
+Restart=no
+TimeoutStopSec=5s
+KillMode=control-group
+UMask=0077
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/run/carecall-wifi-manager
+StandardOutput=null
+StandardError=null
