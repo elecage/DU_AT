@@ -1,0 +1,86 @@
+menu "CareCall LED configuration"
+
+    config CARECALL_LED_GPIO
+        int "NeoPixel data GPIO (-1 disables physical output)"
+        range -1 21
+        default 2
+        help
+            GPIO2 connects to DI on one 16-pixel WS2812 ring. GPIO2 is a
+            strapping pin: hardware must satisfy reset/startup requirements.
+            Existing sdkconfig values override this default; verify menuconfig.
+            GPIO4 and native USB
+            GPIO18/19 are rejected. -1 allows confirmation testing without LEDs.
+
+    config CARECALL_LED_BRIGHTNESS
+        int "NeoPixel brightness (1-255)"
+        range 1 255
+        default 16
+
+endmenu
+
+menu "CareCall Wi-Fi configuration"
+
+    config CARECALL_WIFI_SSID
+        string "Wi-Fi SSID"
+        default ""
+        help
+            ESP32-C3가 Station 모드로 연결할 2.4GHz Wi-Fi SSID입니다.
+
+    config CARECALL_WIFI_PASSWORD
+        string "Wi-Fi password"
+        default ""
+        help
+            WPA2/WPA3 Personal 네트워크의 비밀번호입니다.
+            비밀번호가 없는 개방형 네트워크라면 비워둘 수 있습니다.
+
+endmenu
+
+
+menu "CareCall MQTT configuration"
+
+    config CARECALL_DEVICE_ID
+        string "CareCall device ID"
+        default "button01"
+        help
+            MQTT 토픽과 호출 JSON에서 사용할 장치 ID입니다.
+            영문자, 숫자, 하이픈(-), 밑줄(_)만 사용합니다.
+
+    config CARECALL_MQTT_BROKER_MDNS_HOST
+        string "MQTT Broker mDNS hostname without .local"
+        default "carecall-mqtt-server"
+        help
+            Raspberry Pi의 mDNS 호스트명입니다.
+            .local을 제외한 carecall-mqtt-server만 입력합니다.
+
+    config CARECALL_MQTT_BROKER_PORT
+        int "MQTT Broker port"
+        range 1 65535
+        default 1883
+
+    config CARECALL_MQTT_USERNAME
+        string "MQTT username"
+        default "button01"
+
+    config CARECALL_MQTT_PASSWORD
+        string "MQTT password"
+        default ""
+
+    config CARECALL_MQTT_CLIENT_ID
+        string "MQTT Client ID"
+        default "carecall-button01"
+
+endmenu
+
+
+menu "CareCall phone Wi-Fi setup"
+
+    config CARECALL_SETUP_AP_PASSWORD
+        string "Fixed setup AP password (16-63 ASCII letters/digits)"
+        default ""
+        help
+            Set this password locally before building.
+            Use 16-63 ASCII letters or digits.
+            Do not publish actual passwords, sdkconfig, or firmware binaries.
+            Router changes and restarts do not change this password.
+
+endmenu
