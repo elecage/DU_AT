@@ -1,0 +1,30 @@
+[Unit]
+Description=CareCall MQTT Receiver
+Wants=mosquitto.service
+After=mosquitto.service
+
+[Service]
+Type=simple
+User=carecallserver
+Group=carecallserver
+WorkingDirectory=/home/carecallserver/carecall_receiver
+
+EnvironmentFile=/etc/carecall/receiver.env
+Environment="PYTHONUNBUFFERED=1"
+
+ExecStart=/home/carecallserver/carecall_receiver/.venv/bin/python /home/carecallserver/carecall_receiver/mqtt_receiver.py
+
+Restart=on-failure
+RestartSec=5s
+KillSignal=SIGINT
+TimeoutStopSec=15s
+
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
