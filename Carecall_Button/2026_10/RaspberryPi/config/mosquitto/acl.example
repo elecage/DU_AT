@@ -1,0 +1,16 @@
+# Template for the three device IDs; contains no credentials.
+user carecall_receiver
+topic read carecall/v1/devices/+/call
+topic write carecall/v1/devices/+/ack
+
+user button01
+topic write carecall/v1/devices/button01/call
+topic read carecall/v1/devices/button01/ack
+
+user button02
+topic write carecall/v1/devices/button02/call
+topic read carecall/v1/devices/button02/ack
+
+user button03
+topic write carecall/v1/devices/button03/call
+topic read carecall/v1/devices/button03/ack
