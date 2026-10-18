@@ -1,0 +1,30 @@
+[Unit]
+Description=CareCall persistent Wi-Fi and phone recovery
+Wants=systemd-networkd.service
+After=systemd-networkd.service cloud-init-local.service ufw.service
+Conflicts=carecall-wifi-aptrial-test.service carecall-wifi-aptrial-guard.service carecall-wifi-aptrial-hostapd.service carecall-wifi-aptrial-dhcp.service carecall-wifi-aptrial-web.service carecall-wifi-aptrial-router.service
+ConditionPathExists=/etc/carecall-wifi-manager/owner
+StartLimitIntervalSec=0
+[Service]
+Type=notify
+NotifyAccess=main
+ExecStart=/usr/bin/python3 -B /opt/carecall-wifi-manager/manager.py run
+Restart=always
+RestartSec=5s
+WatchdogSec=120s
+TimeoutStartSec=30s
+TimeoutStopSec=10s
+KillMode=control-group
+RuntimeDirectory=carecall-wifi-manager
+RuntimeDirectoryMode=0755
+RuntimeDirectoryPreserve=yes
+UMask=0077
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/run /etc/netplan /etc/cloud/cloud.cfg.d /etc/carecall-wifi-manager
+StandardOutput=journal
+StandardError=null
+[Install]
+WantedBy=multi-user.target
