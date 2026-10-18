@@ -1,0 +1,36 @@
+[Unit]
+Description=CareCall Telegram Outbox Sender
+Wants=network-online.target
+After=network-online.target carecall-receiver.service
+StartLimitIntervalSec=60
+StartLimitBurst=10
+
+[Service]
+Type=simple
+User=carecallserver
+Group=carecallserver
+WorkingDirectory=/home/carecallserver/carecall_receiver
+ExecStart=/home/carecallserver/carecall_receiver/.venv/bin/python -B /home/carecallserver/carecall_receiver/telegram_worker.py
+LoadCredential=telegram_bot_token:/etc/carecall/telegram/bot-token
+Environment=PYTHONUNBUFFERED=1
+Restart=on-failure
+RestartSec=5
+RestartPreventExitStatus=2
+TimeoutStopSec=60
+UMask=0077
+LimitCORE=0
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/carecallserver/carecall_receiver/data
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+[Install]
+WantedBy=multi-user.target
