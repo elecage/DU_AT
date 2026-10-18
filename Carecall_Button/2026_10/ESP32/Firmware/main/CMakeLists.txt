@@ -1,0 +1,30 @@
+idf_component_register(
+    SRCS
+        "app_main.cpp"
+        "button_driver.cpp"
+        "call_manager.cpp"
+        "call_outbox.cpp"
+        "call_led.cpp"
+        "wifi_manager.cpp"
+        "wifi_form.cpp"
+        "wifi_portal.cpp"
+        "mqtt_manager.cpp"
+
+    INCLUDE_DIRS
+        "."
+
+    PRIV_REQUIRES
+        esp_driver_gpio
+        esp_http_server
+        lwip
+        esp_wifi
+        esp_event
+        esp_netif
+        nvs_flash
+        json
+        mqtt
+        esp_timer
+        esp_hw_support
+        espressif__mdns
+        espressif__led_strip
+)
