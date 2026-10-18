@@ -1,0 +1,20 @@
+[Unit]
+Description=CareCall Wi-Fi setup hostapd
+BindsTo=carecall-wifi-manager.service
+After=carecall-wifi-manager.service systemd-networkd.service
+ConditionPathExists=/etc/carecall-wifi-manager/owner
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/sbin/hostapd /run/carecall-wifi-manager/hostapd.conf
+Restart=no
+TimeoutStopSec=5s
+KillMode=control-group
+UMask=0077
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/run/carecall-wifi-manager
+StandardOutput=null
+StandardError=null
