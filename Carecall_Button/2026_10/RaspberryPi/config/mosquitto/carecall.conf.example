@@ -1,0 +1,7 @@
+# Proposed template, not a copy of the running Pi configuration.
+# Review the target Mosquitto main configuration before installing this fragment.
+# Preserve the host firewall policy. This does not set up the firewall.
+listener 1883
+allow_anonymous false
+password_file /etc/mosquitto/passwd
+acl_file /etc/mosquitto/acl
