@@ -1,0 +1,15 @@
+# ESP-IDF / 개발 도구 (저장소에 올리지 않음)
+.espressif/
+build/
+managed_components/
+sdkconfig.old
+
+# Python
+__pycache__/
+*.pyc
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
