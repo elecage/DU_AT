@@ -1,0 +1,9 @@
+build/
+.espressif/
+managed_components/
+sdkconfig.old
+*.pyc
+__pycache__/
+.vscode/
+.idea/
+.gitconfig-codex

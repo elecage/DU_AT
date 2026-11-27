@@ -1,0 +1,10 @@
+idf_component_register(
+    SRCS
+        "app_main.cpp"
+        "battery_monitor.cpp"
+        "servo_lock.cpp"
+    INCLUDE_DIRS
+        "."
+    PRIV_REQUIRES
+        esp_adc
+)
