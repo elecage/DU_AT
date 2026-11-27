@@ -1,0 +1,24 @@
+[Unit]
+Description=Arduino reverse-triggered ONNX foot camera
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/foot_detector
+Environment=DISPLAY=:0
+Environment=QT_QPA_PLATFORM=xcb
+Environment=XDG_RUNTIME_DIR=%t
+Environment=PYTHONUNBUFFERED=1
+ExecStartPre=/usr/bin/sleep 2
+ExecStartPre=/usr/bin/test -x %h/foot_detector/.venv/bin/python
+ExecStartPre=/usr/bin/test -f %h/foot_detector/best.onnx
+ExecStart=%h/foot_detector/.venv/bin/python %h/foot_detector/reverse_camera_controller.py --port auto --baud 115200 --hold-seconds 10 --camera /dev/video0 --camera-format MJPG --conf 0.50 --iou 0.45 --threads 4 --width 1280 --height 720 --fps 30 --display-width 800 --display-height 480
+Restart=on-failure
+RestartSec=3
+KillSignal=SIGINT
+KillMode=control-group
+TimeoutStopSec=15
+
+[Install]
+WantedBy=graphical-session.target

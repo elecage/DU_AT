@@ -1,0 +1,5 @@
+# Raspberry Pi 5 · Ubuntu 24.04 Desktop 64-bit · Python 3.12
+# Ubuntu packages: python3-opencv (cv2) and python3-numpy (NumPy).
+# Create .venv with python3 -m venv --system-site-packages .venv.
+onnxruntime==1.30.0
+pyserial==3.5
